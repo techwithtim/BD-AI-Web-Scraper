@@ -36,7 +36,7 @@ async def start_ai_scrape(
 
     job = JobModel(
         user_id=user.id,
-        status="STARTED",
+        status="Started",
         start_time=datetime.now(),
         scrape_data=data.dict(),
     )

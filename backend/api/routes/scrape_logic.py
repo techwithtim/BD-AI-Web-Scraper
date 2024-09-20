@@ -20,7 +20,7 @@ MODEL = os.getenv("MODEL", "openai")
 async def scrape_with_ai(job_id, url, prompt, language, library):
     job = {
         "result": {"tags": {}, "text": None, "html": None},
-        "status": "Started",
+        "status": "In Progress",
     }
     await update_job(job_id, job)
 
@@ -28,7 +28,6 @@ async def scrape_with_ai(job_id, url, prompt, language, library):
         html_content = scrape_website(str(url))
         job["result"]["html"] = html_content
         job["status"] = "In Progress"
-        await update_job(job_id, job)
         pruned_html = prune_dom(html_content)
         relevant_dom = extract_relevant_dom(pruned_html, prompt)
         dom_chunks = chunk_dom_sections(relevant_dom)
