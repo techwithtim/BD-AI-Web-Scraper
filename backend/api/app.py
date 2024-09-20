@@ -18,6 +18,7 @@ if ENVIRONMENT == "development":
     origins = [
         "http://localhost",
         "http://localhost:8000",  # if you're using a specific port
+        "http://localhost:5173",
         "http://127.0.0.1",  # another common localhost address
     ]
 else:
@@ -32,8 +33,8 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-app.include_router(ai_scraper, prefix="/", tags=["scraper"])
-app.include_router(user, prefix="/user", tags=["user"])
+app.include_router(user.router, prefix="/users", tags=["user"])
+app.include_router(ai_scraper.router, prefix="", tags=["scraper"])
 
 
 @app.on_event("startup")

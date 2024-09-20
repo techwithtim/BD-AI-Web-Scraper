@@ -1,0 +1,5 @@
+export const ActionTypes = {
+    SHOW_PREVIEW: 'SHOW_PREVIEW',
+    GENERATE_SCRAPER: 'GENERATE_SCRAPER',
+    GENERATE_WITH_BD: 'GENERATE_WITH_BD'
+  };

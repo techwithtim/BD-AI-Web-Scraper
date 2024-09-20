@@ -1,52 +1,40 @@
 # Import necessary libraries
 from selenium import webdriver
 from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.chrome.options import Options
 import time
 
-# Initialize the WebDriver
-driver = webdriver.Chrome()
+# Set up the WebDriver
+chrome_options = Options()
+chrome_options.add_argument("--headless")  # Run in headless mode (optional)
 
-# URL of the target page
-url = "https://www.trueclassictees.com/en-my/collections/polos"
+service = Service()
+driver = webdriver.Chrome(service=service, options=chrome_options)
 
-# Open the URL
+# Navigate to the website
+url = "https://techwithtim.net/"
 driver.get(url)
 
-# Wait for the page to load completely
-time.sleep(5)  # Adjust the sleep time as needed based on your internet speed
+# Allow the page to load
+time.sleep(3)
 
-# Extract product elements
-product_elements = driver.find_elements(By.CSS_SELECTOR, ".product-card")
+# Find the topics container
+try:
+    topics_container = driver.find_element(By.CLASS_NAME, "pages__TagList-sc-1o7d36l-1")
 
-# Initialize lists to store product titles and prices
-products = []
-prices = []
+    # Extract all topics
+    topics_elements = topics_container.find_elements(
+        By.CLASS_NAME, "tag__TagContainer-sc-3f52y0-0"
+    )
+    topics = [topic.text for topic in topics_elements]
 
-# Loop through each product element and extract the required information
-for product in product_elements:
-    try:
-        # Extract product title
-        title_element = product.find_element(By.CSS_SELECTOR, ".product-card__title")
-        title = title_element.text
-        products.append(title)
-    except Exception as e:
-        print(f"Error extracting title: {e}")
-        products.append("N/A")
-
-    try:
-        # Extract product price
-        price_element = product.find_element(
-            By.CSS_SELECTOR, ".product-card__price .price"
-        )
-        price = price_element.text
-        prices.append(price)
-    except Exception as e:
-        print(f"Error extracting price: {e}")
-        prices.append("N/A")
-
-# Print the extracted products and prices
-for product, price in zip(products, prices):
-    print(f"Product: {product}, Price: {price}")
-
-# Close the WebDriver
-driver.quit()
+    # Print the extracted topics
+    print("Extracted topics:")
+    for topic in topics:
+        print(topic)
+except Exception as e:
+    print(f"An error occurred: {e}")
+finally:
+    # Close the WebDriver
+    driver.quit()

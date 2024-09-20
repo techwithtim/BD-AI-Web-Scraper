@@ -7,6 +7,16 @@ class AIScrapeData(BaseModel):
     language: str
     library: str
 
+    def dict(self, *args, **kwargs):
+        d = super().dict(*args, **kwargs)
+        d["url"] = str(d["url"])  # Convert URL to string
+        return d
+
+    def model_dump(self, *args, **kwargs):
+        d = super().model_dump(*args, **kwargs)
+        d["url"] = str(d["url"])  # Convert URL to string
+        return d
+
     # Validate language to be either "python" or "javascript"
     @validator("language")
     def validate_language(cls, value):
