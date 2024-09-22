@@ -4,12 +4,14 @@ import { startAiScrape, getAiScrapeStatus } from '../services/api';
 import { ScraperStatus } from "../enums/status"
 import JobResult from './JobResult';
 import JobStatusDisplay from "./JobStatusDisplay"
+import { useAuth } from "../contexts/AuthContext"
 
 const JobHandler = ({ scrapeData }) => {
     const [jobId, setJobId] = useState(null);
     const [jobStatus, setJobStatus] = useState(null);
     const [jobResult, setJobResult] = useState(null);
     const [startTime, setStartTime] = useState(null)
+    const { credits } = useAuth();
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
@@ -37,9 +39,12 @@ const JobHandler = ({ scrapeData }) => {
     };
 
     const handleStartJob = async () => {
-        setLoading(true);
+        if (credits === 0) {
+            return message.error("Insufficient credits.")
+        }
 
         try {
+            setLoading(true);
             const response = await startAiScrape(scrapeData);
             setJobId(response.job_id);
             setJobStatus(ScraperStatus.STARTED);
@@ -48,8 +53,9 @@ const JobHandler = ({ scrapeData }) => {
         } catch (error) {
             console.error('Error starting scrape job:', error);
             message.error('Failed to start scrape job');
+        } finally {
+            setLoading(false);
         }
-        setLoading(false);
     };
 
     return (

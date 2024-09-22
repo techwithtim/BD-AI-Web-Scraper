@@ -52,9 +52,9 @@ const AppContent = () => {
         </div>
       )}
       <ScrapeForm showLogin={() => setLoginModalVisible(true)} />
-      <div style={{ marginTop: 20 }}>
+      {isLoggedIn && <div style={{ marginTop: 20 }}>
         <UserJobs />
-      </div>
+      </div>}
       <LoginModal
         visible={loginModalVisible}
         onCancel={() => setLoginModalVisible(false)}
