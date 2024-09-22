@@ -29,6 +29,7 @@ class JobModel(BaseModel):
                     "prompt": "Scrape all headers",
                     "library": "selenium",
                     "language": "Python",
+                    "performance": 2
                 },
             }
         },

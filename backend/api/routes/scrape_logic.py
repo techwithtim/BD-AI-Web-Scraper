@@ -17,7 +17,7 @@ load_dotenv()
 MODEL = os.getenv("MODEL", "openai")
 
 
-async def scrape_with_ai(job_id, url, prompt, language, library):
+async def scrape_with_ai(job_id, url, prompt, language, library, performance):
     job = {
         "result": {"tags": {}, "text": None, "html": None},
         "status": "In Progress",
@@ -29,7 +29,7 @@ async def scrape_with_ai(job_id, url, prompt, language, library):
         job["result"]["html"] = html_content
         job["status"] = "In Progress"
         pruned_html = prune_dom(html_content)
-        relevant_dom = extract_relevant_dom(pruned_html, prompt)
+        relevant_dom = extract_relevant_dom(pruned_html, prompt, performance)
         dom_chunks = chunk_dom_sections(relevant_dom)
         if MODEL == "openai":
             result = send_dom_chunks_to_openai(

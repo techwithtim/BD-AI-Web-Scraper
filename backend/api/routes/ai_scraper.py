@@ -11,11 +11,16 @@ from datetime import datetime
 router = APIRouter()
 
 
-async def check_user_credits(user: UserOut = Depends(get_current_user)):
-    if user.credits <= 0:
-        raise HTTPException(status_code=403, detail="Insufficient credits")
+async def check_user_credits(
+    data: AIScrapeData,
+    user: UserOut = Depends(get_current_user)
+):
+    if user.credits < data.performance:
+        raise HTTPException(
+            status_code=403, 
+            detail=f"Insufficient credits. You need at least {data.performance} credits for this operation."
+        )
     return user
-
 
 @router.post("/start-ai-scrape")
 async def start_ai_scrape(
@@ -28,9 +33,10 @@ async def start_ai_scrape(
     prompt = data.prompt
     language = data.language
     library = data.library
+    performance = data.performance
 
     # Deduct one credit
-    updated_user = await update_user_credits(user.email, -1)
+    updated_user = await update_user_credits(user.email, - performance)
     if not updated_user:
         raise HTTPException(status_code=500, detail="Failed to update user credits")
 
@@ -42,7 +48,7 @@ async def start_ai_scrape(
     )
     job_id = str(await create_job(job))
 
-    background_tasks.add_task(scrape_with_ai, job_id, url, prompt, language, library)
+    background_tasks.add_task(scrape_with_ai, job_id, url, prompt, language, library, performance)
 
     return {
         "job_id": job_id,

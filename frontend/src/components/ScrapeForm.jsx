@@ -16,6 +16,7 @@ const ScrapeForm = ({ showLogin }) => {
         language: 'python',
         library: 'selenium',
         prompt: '',
+        performace: 1
     });
 
     const handleInputChange = (name, value) => {
@@ -83,10 +84,10 @@ const ScrapeForm = ({ showLogin }) => {
             </Form.Item>
             <Form.Item label="Performance">
                 <Slider
-                    min={0}
+                    min={1}
                     max={4}
                     value={scrapeData.performance}
-                // onChange={(value) => handleInputChange('performance', value)}
+                    onChange={(value) => handleInputChange('performance', value)}
                 />
             </Form.Item>
             {isLoggedIn ? (

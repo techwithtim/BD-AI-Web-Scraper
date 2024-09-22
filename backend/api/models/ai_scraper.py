@@ -6,6 +6,7 @@ class AIScrapeData(BaseModel):
     prompt: constr(min_length=1, max_length=100)
     language: str
     library: str
+    performance: int
 
     def dict(self, *args, **kwargs):
         d = super().dict(*args, **kwargs)
@@ -31,4 +32,10 @@ class AIScrapeData(BaseModel):
             raise ValueError(
                 "Library must be either 'playwright', 'puppeteer', or 'selenium'"
             )
+        return value
+
+    @validator("performance")
+    def validate_performance(cls, value):
+        if not isinstance(value, int) or value < 1 or value > 4:
+            raise ValueError("Performance must be a whole number between 1 and 4")
         return value

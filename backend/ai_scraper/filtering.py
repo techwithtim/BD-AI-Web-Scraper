@@ -37,11 +37,18 @@ def clean_class_name(class_name):
     return " ".join(words)
 
 
-def extract_relevant_dom(html, context_query, top_n=5, max_depth=6):
+def extract_relevant_dom(html, context_query, performance):
+    top_n = 3 + performance  # This will give a range of 4 to 7
+    max_depth = 4 + performance  # This will give a range of 5 to 8
+
     soup = BeautifulSoup(html, "html.parser")
     tags = soup.find_all()
 
     class_names = [clean_class_name(" ".join(elem.get("class", []))) for elem in tags]
+
+    if len(class_names) < top_n:
+        print(f"Warning: Not enough tags ({len(tags)}) to match requested performance. Adjusting top_n.")
+        top_n = len(tags)
 
     vectorizer = TfidfVectorizer(stop_words="english")
     tfidf_matrix = vectorizer.fit_transform(class_names + [context_query])
