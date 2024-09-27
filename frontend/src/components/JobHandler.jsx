@@ -5,6 +5,7 @@ import { ScraperStatus } from "../enums/status";
 import JobResult from "./JobResult";
 import JobStatusDisplay from "./JobStatusDisplay";
 import { useAuth } from "../contexts/AuthContext";
+import BdAd from "./BdAd"
 import "../css/JobHandler.css";
 
 const JobHandler = ({ scrapeData, login }) => {

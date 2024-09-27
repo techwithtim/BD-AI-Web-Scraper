@@ -58,3 +58,8 @@ padding-right: 5%;
   border: none;
   cursor: pointer;
 }
+
+.credits-txt {
+  color: var(--primary-color);
+  font-weight: 700;
+}

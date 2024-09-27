@@ -64,12 +64,6 @@ const AppContent = () => {
             It's also <a href="">open-source</a>
           </p>
         </div>
-        {isLoggedIn && (
-          <div>
-            <p>Credits: {credits}</p>
-            <Button onClick={handleLogout}>Logout</Button>
-          </div>
-        )}
         <ScrapeForm showLogin={() => setLoginModalVisible(true)} />
         {isLoggedIn && (
           <div style={{ marginTop: 20 }}>

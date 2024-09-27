@@ -16,6 +16,7 @@ html, body {
     background-color: white;
     font-size: var(--font-size);
     font-weight: var(--font-weight);
+    font-family: var(--font-family);
     height: 100%;
 }
 

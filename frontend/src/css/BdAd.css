@@ -1,0 +1,56 @@
+.scale-up-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    text-align: center;
+  }
+  
+.scale-up-container h1 {
+    font-size: 28px;
+    margin-bottom: 10px;
+  }
+  
+  .subtitle {
+    font-size: 14px;
+    color: var(--third-color);
+    margin-bottom: 30px;
+  }
+  
+  .steps-container {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 30px;
+  }
+  
+  .step {
+    flex: 1;
+    margin: 0 10px;
+  }
+  
+  .step-number {
+    background-color: var(--primary-color);
+    color: white;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto 10px;
+    font-size: 30px;
+    font-weight: bold;
+  }
+  
+  .step h2 {
+    font-size: 18px;
+    margin-bottom: 5px;
+  }
+  
+  .step p {
+    font-size: 14px;
+    color: var(--third-color);
+  }
+  
+  .bright-data {
+    width: 80px;
+  }

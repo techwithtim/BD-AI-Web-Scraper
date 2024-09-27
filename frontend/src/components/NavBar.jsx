@@ -13,7 +13,7 @@ const Navbar = ({ credits, isLoggedIn, login, logout }) => {
       <div className="navbar-right">
         {isLoggedIn ? (
           <>
-            <span className="navbar-text">Credits: {credits}</span>
+            <span className="navbar-text">Credits: <span className="credits-txt">{credits}</span></span>
             <button className="navbar-button" onClick={logout}>Logout</button>
           </>
         ) : (

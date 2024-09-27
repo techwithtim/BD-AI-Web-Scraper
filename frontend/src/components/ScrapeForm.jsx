@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { Form, Input, Select, Slider } from "antd";
-import IFrameWebsitePreview from "./IFramePreview";
 import { useAuth } from "../contexts/AuthContext";
 import JobHandler from "./JobHandler";
 import "../css/ScrapeForm.css";
 import bdLogo from "../assets/bd-logo.png";
+import BdAd from "./BdAd"
 
 const { Option } = Select;
 const { TextArea } = Input;
@@ -80,6 +80,7 @@ const ScrapeForm = ({ showLogin }) => {
           <p className="login-msg">Please log in to generate scraping code.</p>
         )}
       </div>
+      <BdAd/>
     </Form>
   );
 };
