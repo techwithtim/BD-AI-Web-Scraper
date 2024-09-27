@@ -1,102 +1,87 @@
-import React, { useState } from 'react';
-import { Form, Input, Select, Slider, Button, message } from 'antd';
-import IFrameWebsitePreview from "./IFramePreview"
-import { useAuth } from '../contexts/AuthContext';
-import { ActionTypes } from "../enums/actions"
-import JobHandler from "./JobHandler"
+import React, { useState } from "react";
+import { Form, Input, Select, Slider } from "antd";
+import IFrameWebsitePreview from "./IFramePreview";
+import { useAuth } from "../contexts/AuthContext";
+import JobHandler from "./JobHandler";
+import "../css/ScrapeForm.css";
+import bdLogo from "../assets/bd-logo.png";
 
 const { Option } = Select;
 const { TextArea } = Input;
 
 const ScrapeForm = ({ showLogin }) => {
-    const { isLoggedIn } = useAuth();
-    const [showPreview, setShowPreview] = useState(false)
-    const [scrapeData, setScrapeData] = useState({
-        url: '',
-        language: 'python',
-        library: 'selenium',
-        prompt: '',
-        performace: 1
-    });
+  const { isLoggedIn } = useAuth();
+  const [scrapeData, setScrapeData] = useState({
+    url: "",
+    language: "python",
+    library: "selenium",
+    prompt: "",
+    performance: 1,
+  });
 
-    const handleInputChange = (name, value) => {
-        setScrapeData({ ...scrapeData, [name]: value });
-    };
+  const handleInputChange = (name, value) => {
+    setScrapeData({ ...scrapeData, [name]: value });
+  };
 
-    const handleAction = (action) => {
-
-        if (!isLoggedIn) {
-            showLogin()
-            return
-        }
-
-        switch (action) {
-            case ActionTypes.SHOW_PREVIEW:
-                if (scrapeData.url)
-                    setShowPreview(true);
-                else
-                    message.error("Please enter a valid URL.")
-                break;
-            default:
-                console.log('Unknown action:', action);
-        }
-    };
-
-
-    return (
-        <Form layout="vertical" style={{ marginTop: '20px' }}>
-            <Form.Item label="Website">
-                <Input
-                    value={scrapeData.url}
-                    onChange={(e) => handleInputChange('url', e.target.value)}
-                    placeholder="Enter website URL"
-                />
-            </Form.Item>
-            <Form.Item>
-                <Button onClick={() => handleAction(ActionTypes.SHOW_PREVIEW)}>Show Preview</Button>
-            </Form.Item>
-            {showPreview && <IFrameWebsitePreview url={scrapeData.url} />}
-            <Form.Item label="Language">
-                <Select
-                    value={scrapeData.language}
-                    onChange={(value) => handleInputChange('language', value)}
-                >
-                    <Option value="python">Python</Option>
-                    <Option value="javascript">JavaScript</Option>
-                </Select>
-            </Form.Item>
-            <Form.Item label="Library">
-                <Select
-                    value={scrapeData.library}
-                    onChange={(value) => handleInputChange('library', value)}
-                >
-                    <Option value="selenium">Selenium</Option>
-                    <Option value="playwright">Playwright</Option>
-                    <Option value="puppeteer">Puppeteer</Option>
-                </Select>
-            </Form.Item>
-            <Form.Item label="Prompt">
-                <TextArea
-                    value={scrapeData.prompt}
-                    onChange={(e) => handleInputChange('prompt', e.target.value)}
-                    rows={4}
-                />
-            </Form.Item>
-            <Form.Item label="Performance">
-                <Slider
-                    min={1}
-                    max={4}
-                    value={scrapeData.performance}
-                    onChange={(value) => handleInputChange('performance', value)}
-                />
-            </Form.Item>
-            {isLoggedIn ? (
-                <JobHandler scrapeData={scrapeData} />
-            ) : (
-                <p>Please log in to generate scraping code.</p>
-            )}
-        </Form>
-    );
+  return (
+    <Form className="scrape-form" layout="vertical">
+      <div className="row">
+        <Form.Item label="Target Website" className="item">
+          <Input
+            value={scrapeData.url}
+            onChange={(e) => handleInputChange("url", e.target.value)}
+            placeholder="https://example.com"
+          />
+        </Form.Item>
+        {/*showPreview && <IFrameWebsitePreview url={scrapeData.url} />*/}
+        <Form.Item label="Language" className="item">
+          <Select
+            value={scrapeData.language}
+            onChange={(value) => handleInputChange("language", value)}
+          >
+            <Option value="python">Python</Option>
+            <Option value="javascript">JavaScript</Option>
+          </Select>
+        </Form.Item>
+        <Form.Item label="Library" className="item">
+          <Select
+            value={scrapeData.library}
+            onChange={(value) => handleInputChange("library", value)}
+          >
+            <Option value="selenium">Selenium</Option>
+            <Option value="playwright">Playwright</Option>
+            <Option value="puppeteer">Puppeteer</Option>
+          </Select>
+        </Form.Item>
+      </div>
+      <Form.Item label="Prompt">
+        <TextArea
+          value={scrapeData.prompt}
+          onChange={(e) => handleInputChange("prompt", e.target.value)}
+          rows={4}
+          placeholder="Use simple words. For example: products and price "
+        />
+      </Form.Item>
+      <Form.Item label="Performance">
+        <Slider
+          min={1}
+          max={4}
+          value={scrapeData.performance}
+          onChange={(value) => handleInputChange("performance", value)}
+        />
+      </Form.Item>
+      <JobHandler scrapeData={scrapeData} login={showLogin} />
+      <div style={{marginTop: 20}}>
+        <span className="powered-by">
+          <p>POWERED BY</p>
+          <img src={bdLogo} />
+        </span>
+        {!isLoggedIn && (
+          <p className="login-msg">Please log in to generate scraping code.</p>
+        )}
+      </div>
+    </Form>
+  );
 };
 
 export default ScrapeForm;

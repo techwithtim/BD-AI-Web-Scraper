@@ -15,9 +15,12 @@ class Settings(BaseSettings):
         os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES", "30")
     )
     REFRESH_TOKEN_EXPIRE_DAYS: int = int(os.getenv("REFRESH_TOKEN_EXPIRE_DAYS", "7"))
+    ENVIRONMENT: str = os.getenv("ENVIRONMENT", "development")
+    MODEL: str = os.getenv("MODEL", "openai")
 
     class Config:
         env_file = ".env"
+        extra = "allow"
 
 
 settings = Settings()

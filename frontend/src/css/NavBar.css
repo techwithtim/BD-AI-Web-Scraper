@@ -1,0 +1,60 @@
+/* Navbar.css */
+.navbar {
+  position: fixed; /* Stick to the top */
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: white;
+  border-bottom: 1px solid lightgrey; /* Light grey bottom separator */
+  padding-top: 10px;
+  padding-bottom: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Optional shadow for a better look */
+  z-index: 1000; /* Ensure it stays on top of other content */
+  display: flex;
+  justify-content: space-between; /* Space between the left and right sections */
+  align-items: center; /* Align items vertically in the middle */
+}
+
+.navbar-left {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  padding-left: 5%;
+}
+
+.navbar-logo {
+  height: 40px; /* Adjust the height for the logo */
+}
+
+.navbar-right {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+align-items: center;
+padding-right: 5%;
+}
+
+.navbar-text {
+  font-size: 1.2rem;
+  margin-right: 20px;
+}
+
+
+.navbar-button:hover {
+  opacity: 90%;
+}
+
+.navbar-button {
+  border-radius: 5px;
+  color: #F7F8F8;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 25px;
+  background-color: var(--primary-color);
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 24px;
+  padding-right: 24px;
+  border: none;
+  cursor: pointer;
+}

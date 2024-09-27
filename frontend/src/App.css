@@ -1,0 +1,55 @@
+:root {
+    --primary-color:  #2043FF;
+    --secondary-color:  #111112;
+    --third-color: #2E2E33;
+    --font-size: 16px;
+    --font-family: "Inter";
+    --font-weight: 600;
+}
+
+#root {
+    height: 100vh;
+}
+
+html, body {
+    margin: 0;
+    background-color: white;
+    font-size: var(--font-size);
+    font-weight: var(--font-weight);
+    height: 100%;
+}
+
+.main {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%
+}
+
+.header {
+    text-align: center;
+    font-family: var(--font-family);
+    padding-top: 40px;
+}
+
+.header h1 {
+    font-size: 80px;
+
+}
+.header h1:first-of-type {
+    margin-bottom: -60px;
+    color: var(--primary-color)
+}
+
+.header p {
+    font-size: 21px;
+    font-weight: 400;
+    color: var(--third-color);
+}
+
+.header p:first-of-type {
+    font-size: 21px;
+    margin-bottom: -10px;
+    margin-top: -25px;
+}
+

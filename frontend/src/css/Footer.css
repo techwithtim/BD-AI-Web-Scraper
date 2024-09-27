@@ -1,0 +1,40 @@
+.footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: row;
+  padding-left: 5%;
+  padding-right: 5%;
+  padding-bottom: 20px;
+  border-top: 1px solid #e5e7eb;
+  font-family: var(--font-family);
+
+}
+
+.footer-logo {
+  width: 110px;
+}
+
+.footer-link {
+  font-size: 0.875rem;
+  color: #4b5563;
+  text-decoration: none;
+  margin-right: 1rem;
+}
+
+.nav-link:hover {
+  color: #111827;
+}
+
+.contact {
+  font-size: 0.875rem;
+}
+
+.contact a {
+  color: #4b5563;
+  text-decoration: none;
+}
+
+.contact a:hover {
+  color: #111827;
+}

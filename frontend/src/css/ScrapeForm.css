@@ -1,0 +1,43 @@
+.scrape-form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-top: 28px;
+    padding-left: 5%;
+    padding-right: 5%;
+}
+
+.scrape-form .row {
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 15px;
+}
+
+.scrape-form .row .item:first-of-type {
+    flex: 4
+}
+
+.scrape-form .row .item {
+    flex: 1
+}
+
+.powered-by {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    font-weight: 500; 
+    color: var(--third-color)
+}
+
+.login-msg {
+    font-weight: 400;
+    text-align: center;
+    font-size: 12px;
+    font-style: italic;
+    color:#90A2B7;
+
+}
