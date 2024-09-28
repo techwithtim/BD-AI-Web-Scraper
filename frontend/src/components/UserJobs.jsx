@@ -4,37 +4,28 @@ import { getUserJobs, deleteJob } from "../services/api";
 import JobResultViewer from "./JobResultViewer";
 import { ScraperStatus } from "../enums/status";
 import "../css/UserJobs.css"
+import { useAuth } from "../contexts/AuthContext";
 
 const UserJobs = () => {
-    const [jobs, setJobs] = useState([]);
-    const [loading, setLoading] = useState(true);
+    const {jobs, setJobs} = useAuth()
+    const [loading, setLoading] = useState(false);
     const [selectedJob, setSelectedJob] = useState(null);
     const [resultViewerVisible, setResultViewerVisible] = useState(false);
 
-    useEffect(() => {
-        fetchJobs();
-    }, []);
-
-    const fetchJobs = async () => {
-        try {
-            const fetchedJobs = await getUserJobs();
-            setJobs(fetchedJobs);
-        } catch (error) {
-            console.error("Failed to fetch jobs:", error);
-            message.error("Failed to fetch jobs");
-        } finally {
-            setLoading(false);
-        }
-    };
 
     const handleDelete = async (jobId) => {
+        if (loading) return
+        setLoading(true)
         try {
             await deleteJob(jobId);
+            console.log(jobId)
             message.success("Job deleted successfully");
-            fetchJobs(); // Refresh the job list
+            setJobs((jobs) => jobs.filter((job) => job._id !== jobId))
         } catch (error) {
             console.error("Failed to delete job:", error);
             message.error("Failed to delete job");
+        } finally {
+            setLoading(false)
         }
     };
 

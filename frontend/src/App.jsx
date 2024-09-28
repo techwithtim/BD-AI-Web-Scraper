@@ -4,7 +4,7 @@ import ScrapeForm from "./components/ScrapeForm";
 import LoginModal from "./components/LoginModal";
 import RegisterModal from "./components/RegisterModal";
 import { AuthProvider, useAuth } from "./contexts/AuthContext";
-import { getUserCredits } from "./services/api";
+import { getUserCredits, getUserJobs } from "./services/api";
 import UserJobs from "./components/UserJobs";
 import Navbar from "./components/NavBar";
 import Footer from "./components/Footer"
@@ -13,15 +13,26 @@ import "./App.css";
 
 
 const AppContent = () => {
-  const { isLoggedIn, logout, credits, setCredits } = useAuth();
+  const { isLoggedIn, logout, credits, setCredits, setJobs } = useAuth();
   const [loginModalVisible, setLoginModalVisible] = useState(false);
   const [registerModalVisible, setRegisterModalVisible] = useState(false);
 
   useEffect(() => {
     if (isLoggedIn) {
       fetchUserCredits();
+      fetchJobs()
     }
   }, [isLoggedIn]);
+
+  const fetchJobs = async () => {
+    try {
+        const fetchedJobs = await getUserJobs();
+        setJobs(fetchedJobs);
+    } catch (error) {
+        console.error("Failed to fetch jobs:", error);
+        message.error("Failed to fetch jobs");
+    } 
+};
 
   const fetchUserCredits = async () => {
     try {
@@ -64,7 +75,7 @@ const AppContent = () => {
             It's also <a href="">open-source</a>
           </p>
         </div>
-        <ScrapeForm showLogin={() => setLoginModalVisible(true)} fetchCredits={fetchUserCredits}/>
+        <ScrapeForm showLogin={() => setLoginModalVisible(true)} fetchCredits={fetchUserCredits} fetchJobs={fetchJobs}/>
         {isLoggedIn && (
           <div style={{ marginTop: 20 }}>
             <UserJobs />

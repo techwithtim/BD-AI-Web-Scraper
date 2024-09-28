@@ -12,7 +12,7 @@ const JobHandler = ({ scrapeData, login, stopLoading }) => {
   const [jobStatus, setJobStatus] = useState(null);
   const [jobResult, setJobResult] = useState(null);
   const [startTime, setStartTime] = useState(null);
-  const { credits, isLoggedIn } = useAuth();
+  const { credits, isLoggedIn, setJobs } = useAuth();
 
   useEffect(() => {
     let intervalId;
@@ -44,7 +44,7 @@ const JobHandler = ({ scrapeData, login, stopLoading }) => {
         response.status === ScraperStatus.FAILED
       ) {
         setJobResult(response.result);
-        stopLoading(false);
+        stopLoading(response.status);
       }
     } catch (error) {
       console.error("Error checking job status:", error);

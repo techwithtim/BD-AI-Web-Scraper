@@ -9,6 +9,7 @@ export const AuthProvider = ({ children }) => {
     const [loading, setLoading] = useState(true)
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [credits, setCredits] = useState(0);
+    const [jobs, setJobs] = useState([])
 
     useEffect(() => {
         setLoading(true)
@@ -37,6 +38,9 @@ export const AuthProvider = ({ children }) => {
         logout,
         credits,
         setCredits,
+        setJobs,
+        jobs,
+        loading
     };
 
     return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

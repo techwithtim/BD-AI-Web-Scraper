@@ -1,15 +1,16 @@
 import React, { useState } from "react";
-import { Form, Input, Select, Slider, Button } from "antd";
+import { Form, Input, Select, Slider, Button, message } from "antd";
 import { useAuth } from "../contexts/AuthContext";
 import JobHandler from "./JobHandler";
 import LoadingIndicator from "./LoadingIndicator";
 import "../css/ScrapeForm.css";
 import bdLogo from "../assets/bd-logo.png";
+import { ScraperStatus } from "../enums/status";
 
 const { Option } = Select;
 const { TextArea } = Input;
 
-const ScrapeForm = ({ showLogin, fetchCredits }) => {
+const ScrapeForm = ({ showLogin, fetchCredits, fetchJobs }) => {
   const { isLoggedIn } = useAuth();
   const [form] = Form.useForm(); // Form instance for handling form state
   const [scrapeData, setScrapeData] = useState({
@@ -19,25 +20,30 @@ const ScrapeForm = ({ showLogin, fetchCredits }) => {
     prompt: "",
     performance: 1,
   });
-  const [buttonType, setButtonType] = useState(null)
+  const [buttonType, setButtonType] = useState(null);
   const [loading, setLoading] = useState(false);
-  const promptMaxLength = 100
+  const promptMaxLength = 100;
 
   const handleInputChange = (name, value) => {
     setScrapeData({ ...scrapeData, [name]: value });
   };
 
   const handleSubmit = (values) => {
-    if (loading) return
-    setLoading(true)
-    setScrapeData({...values, bdMode: buttonType ==="normal" ? false : true})
-    
+    if (loading) return;
+    setLoading(true);
+    setScrapeData({
+      ...values,
+      bdMode: buttonType === "normal" ? false : true,
+    });
   };
 
-  const stopLoading = () => {
-    setScrapeData({...scrapeData, bdMode: null})
+  const stopLoading = (status) => {
+    if (!loading) return;
+    if (status === ScraperStatus.COMPLETED) message.success("Job completed.");
+    setScrapeData({ ...scrapeData, bdMode: null });
     setLoading(false);
-    fetchCredits()
+    fetchCredits();
+    fetchJobs();
   };
 
   return (
@@ -107,7 +113,10 @@ const ScrapeForm = ({ showLogin, fetchCredits }) => {
         name="prompt"
         rules={[
           { required: true, message: "Please enter a prompt" },
-          { max: promptMaxLength, message: `Prompt cannot exceed ${promptMaxLength} characters` },
+          {
+            max: promptMaxLength,
+            message: `Prompt cannot exceed ${promptMaxLength} characters`,
+          },
           { min: 5, message: `Prompt must be at least 5 characters` },
         ]}
         required={false}
@@ -132,27 +141,43 @@ const ScrapeForm = ({ showLogin, fetchCredits }) => {
 
       {!loading ? (
         <div className="buttons">
-          <Button className="code-btn" htmlType="submit" onClick={() => setButtonType("normal")}>
+          <Button
+            className="code-btn"
+            htmlType="submit"
+            onClick={() => setButtonType("normal")}
+          >
             Generate Code
           </Button>
-          <Button className="bd-btn" htmlType="submit" onClick={() => setButtonType("bd")}>
+          <Button
+            className="bd-btn"
+            htmlType="submit"
+            onClick={() => setButtonType("bd")}
+          >
             Generate with BrightData
           </Button>
         </div>
-      ) : <LoadingIndicator />}
+      ) : (
+        <LoadingIndicator />
+      )}
 
       <div style={{ marginTop: 20 }}>
-          <span className="powered-by">
-            <p>POWERED BY</p>
-            <img src={bdLogo} alt="bd logo" />
-          </span>
-          {!isLoggedIn && (
-            <p className="login-msg">
-              Please <a onClick={showLogin}>login</a> to generate scraping code.
-            </p>
-          )}
-        </div>
-      { isLoggedIn && <JobHandler scrapeData={scrapeData} login={showLogin} stopLoading={stopLoading}/>}
+        <span className="powered-by">
+          <p>POWERED BY</p>
+          <img src={bdLogo} alt="bd logo" />
+        </span>
+        {!isLoggedIn && (
+          <p className="login-msg">
+            Please <a onClick={showLogin}>login</a> to generate scraping code.
+          </p>
+        )}
+      </div>
+      {isLoggedIn && (
+        <JobHandler
+          scrapeData={scrapeData}
+          login={showLogin}
+          stopLoading={stopLoading}
+        />
+      )}
     </Form>
   );
 };

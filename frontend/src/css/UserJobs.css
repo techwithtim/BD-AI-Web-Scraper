@@ -1,5 +1,6 @@
 .user-jobs {
-    padding: 20px;
+    padding-left: 5%;
+    padding-right: 5%;
     font-family: var(--font-family);
     font-weight: 400;
 }
