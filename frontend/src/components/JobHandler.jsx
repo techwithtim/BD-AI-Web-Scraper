@@ -5,7 +5,6 @@ import { ScraperStatus } from "../enums/status";
 import JobResult from "./JobResult";
 import JobStatusDisplay from "./JobStatusDisplay";
 import { useAuth } from "../contexts/AuthContext";
-import BdAd from "./BdAd"
 import "../css/JobHandler.css";
 
 const JobHandler = ({ scrapeData, login }) => {
@@ -86,7 +85,7 @@ const JobHandler = ({ scrapeData, login }) => {
           loading={loading}
           className="bd-btn"
         >
-          Generate Code with BrightData
+          Generate with BrightData
         </Button>
       </div>
       {jobStatus && (

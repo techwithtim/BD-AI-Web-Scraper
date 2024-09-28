@@ -2,12 +2,12 @@ import "../css/bdAd.css"
 import React from 'react';
 import bdLogo from "../assets/bd-logo.png"
 
-const ScaleUpScraping = () => {
+const ScaleUpScraping = ({library}) => {
   return (
     <div className="scale-up-container">
       <h1>Ready to Scale Up Your Web Scraping?</h1>
       <p className="subtitle">
-        You've built your Selenium web scraper, now it's time to scale up by
+        You've built your {library} web scraper, now it's time to scale up by
         running it using Bright Data to ensure reliability, scale, and avoid blocks!
       </p>
       

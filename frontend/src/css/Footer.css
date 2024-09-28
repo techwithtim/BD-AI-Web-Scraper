@@ -8,7 +8,7 @@
   padding-bottom: 20px;
   border-top: 1px solid #e5e7eb;
   font-family: var(--font-family);
-
+  font-weight: 400;
 }
 
 .footer-logo {
@@ -26,15 +26,21 @@
   color: #111827;
 }
 
+.column .subtitle {
+  font-weight: 600;
+}
+
+
 .contact {
   font-size: 0.875rem;
 }
 
-.contact a {
+.contact {
   color: #4b5563;
   text-decoration: none;
 }
 
-.contact a:hover {
+.contact:hover {
   color: #111827;
 }
+

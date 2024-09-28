@@ -55,7 +55,7 @@ const AppContent = () => {
         login={() => setLoginModalVisible(true)}
         logout={handleLogout}
       />
-      <div>
+      <div className="content">
         <div className="header">
           <h1>AI Web Scraper</h1>
           <h1>Script Generator</h1>

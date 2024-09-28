@@ -20,6 +20,19 @@ html, body {
     height: 100%;
 }
 
+p, h1, h2, h3, h4, h5, h6, a, input {
+    font-family: var(--font-family);
+}
+
+a {
+    color: var(--primary-color);
+    text-decoration: none;
+}
+
+a:hover {
+    opacity: 75%;
+}
+
 .main {
     display: flex;
     flex-direction: column;
@@ -54,3 +67,8 @@ html, body {
     margin-top: -25px;
 }
 
+
+.content {
+    width: 100%;
+    flex: 1;
+}

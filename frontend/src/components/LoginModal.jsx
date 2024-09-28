@@ -1,43 +1,68 @@
-import React from 'react';
-import { Modal, Form, Input, Button, message } from 'antd';
-import { useAuth } from '../contexts/AuthContext';
+import React from "react";
+import { Modal, Form, Input, Button, message } from "antd";
+import { useAuth } from "../contexts/AuthContext";
+import "../css/LoginModal.css";
 
 const LoginModal = ({ visible, onCancel, onSwitchToRegister }) => {
-    const { login } = useAuth();
+  const { login } = useAuth();
+  const [form] = Form.useForm(); 
 
-    const handleLogin = async (values) => {
-        try {
-            await login(values.username, values.password);
-            message.success('Login successful');
-            onCancel();
-        } catch (error) {
-            message.error('Login failed. Please check your credentials.');
-        }
-    };
+  const handleLogin = async (values) => {
+    form.resetFields()
+    try {
+      await login(values.username, values.password);
+      message.success("Login successful");
+      onCancel();
+    } catch (error) {
+      message.error("Login failed. Please check your credentials.");
+    }
+  };
 
-    return (
-        <Modal
-            title="Login"
-            open={visible}
-            onCancel={onCancel}
-            footer={null}
+  return (
+    <Modal
+      open={visible}
+      onCancel={onCancel}
+      footer={null}
+      className="modal"
+    >
+      <Form onFinish={handleLogin} className="form">
+        <h1>Login</h1>
+        <Form.Item
+          name="username"
+          label="Email"
+          required={false}
+          labelCol={{ span: 24 }}
+          wrapperCol={{ span: 24 }}
+          rules={[{ required: true, message: "Please input your email!" }]}
+          className="item"
         >
-            <Form onFinish={handleLogin}>
-                <Form.Item name="username" rules={[{ required: true, message: 'Please input your email!' }]}>
-                    <Input placeholder="Email" />
-                </Form.Item>
-                <Form.Item name="password" rules={[{ required: true, message: 'Please input your password!' }]}>
-                    <Input.Password placeholder="Password" />
-                </Form.Item>
-                <Form.Item>
-                    <Button type="primary" htmlType="submit">Login</Button>
-                    <Button type="link" onClick={onSwitchToRegister}>
-                        Don't have an account? Register
-                    </Button>
-                </Form.Item>
-            </Form>
-        </Modal>
-    );
+          <Input placeholder="Type email" className="input"/>
+        </Form.Item>
+        <Form.Item
+          labelCol={{ span: 24 }}
+          wrapperCol={{ span: 24 }}
+          required={false}
+          name="password"
+          label="Password"
+          rules={[{ required: true, message: "Please input your password!" }]}
+          className="item"
+        >
+          <Input.Password placeholder="Type password" className="input" />
+        </Form.Item>
+        <Form.Item>
+          <Button type="primary" htmlType="submit" className="modal-btn">
+            Login
+          </Button>
+          <p className="link-text">
+            Don't have an account?{" "}
+            <span onClick={onSwitchToRegister} className="link">
+              Register
+            </span>
+          </p>
+        </Form.Item>
+      </Form>
+    </Modal>
+  );
 };
 
 export default LoginModal;

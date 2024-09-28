@@ -77,10 +77,10 @@ const ScrapeForm = ({ showLogin }) => {
           <img src={bdLogo} />
         </span>
         {!isLoggedIn && (
-          <p className="login-msg">Please log in to generate scraping code.</p>
+          <p className="login-msg">Please <a onClick={showLogin}>login</a> to generate scraping code.</p>
         )}
       </div>
-      <BdAd/>
+      { /*<BdAd/> */ }
     </Form>
   );
 };

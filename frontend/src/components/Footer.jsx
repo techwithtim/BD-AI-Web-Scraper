@@ -11,7 +11,7 @@ const Footer = () => {
       </div>
 
       <div className="column">
-        <p>Links</p>
+        <p className="subtitle">Links</p>
         <div className="links">
           <a href="#" className="footer-link">
             Terms Of Service
@@ -22,7 +22,7 @@ const Footer = () => {
         </div>
       </div>
       <div className="column">
-        <p>Contact</p>
+        <p className="subtitle">Contact</p>
         <a href="mailto:info@scrapegen.com" className="contact">
           info@scrapegen.com
         </a>
