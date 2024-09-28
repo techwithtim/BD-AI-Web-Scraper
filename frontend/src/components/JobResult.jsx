@@ -1,47 +1,77 @@
-import React from 'react';
-import { Typography, Card } from 'antd';
-import ReactHtmlParser from 'react-html-parser';
-import CodeDisplay from './CodeDisplay';
-import SetupInstructions from './SetupInstructions';
+import React, { useState, useEffect } from "react";
+import { Typography, Card, Button } from "antd";
+import ReactHtmlParser from "react-html-parser";
+import CodeDisplay from "./CodeDisplay";
+import SetupInstructions from "./SetupInstructions";
+import BdAd from "./BdAd";
+import "../css/JobResult.css";
 
 const { Paragraph } = Typography;
 
-const JobResult = ({ result, language }) => {
-    if (!result) return null;
+const JobResult = ({ result, language, showBd=true }) => {
+  if (!result) return null;
 
-    return (
-        <div>
-            {result.html && (
-                <Card title="Website Preview" style={{ marginBottom: 16 }}>
-                    <div style={{ height: 500, overflow: 'auto' }}>
-                        {ReactHtmlParser(result.html)}
-                    </div>
-                </Card>
-            )}
+  const [loading, setLoading] = useState(true);
+  const [code, setCode] = useState("");
+  const [preview, setPreview] = useState("No preview");
+  const [instructions, setInstructions] = useState("");
+  const [text, setText] = useState("");
+  const [showCode, setShowCode] = useState(true);
 
-            {result.tags && Object.keys(result.tags).length === 0 && result.text && (
-                <Paragraph>{result.text}</Paragraph>
-            )}
+  useEffect(() => {
+    parseResults();
+  }, [result]);
 
-            {result.tags && Object.entries(result.tags).map(([key, content]) => {
-                if (key === "SCRAPING_CODE") {
-                    return (
-                        <Card title="Generated Code" key={key} style={{ marginBottom: 16 }}>
-                            <CodeDisplay code={content} language={language.toLowerCase()} />
-                        </Card>
-                    );
-                } else if (key === "SETUP_INSTRUCTIONS") {
-                    return <SetupInstructions key={key} instructions={content} />;
-                } else {
-                    return (
-                        <Card title={key} key={key} style={{ marginBottom: 16 }}>
-                            <Paragraph>{content}</Paragraph>
-                        </Card>
-                    );
-                }
-            })}
-        </div>
-    );
+  const parseResults = () => {
+    setLoading(true);
+    if (result.html) setPreview(result.html);
+
+    Object.entries(result.tags).map(([key, content]) => {
+      if (key === "SCRAPING_CODE") {
+        setCode(content);
+      } else if (key === "SETUP_INSTRUCTIONS") {
+        setInstructions(content);
+      } else {
+        setText("");
+      }
+    });
+
+    setLoading(false);
+  };
+
+  if (loading) return <></>;
+
+  const header = (
+    <div className="result-header">
+      <h4>Result</h4>
+      <Button onClick={() => setShowCode(!showCode)}>
+        {!showCode ? "View Code" : "Show Preview"}
+      </Button>
+    </div>
+  );
+
+  return (
+    <div className="result">
+      {result.tags && Object.keys(result.tags).length === 0 && result.text && (
+        <Paragraph>{result.text}</Paragraph>
+      )}
+      <Card title={header} style={{marginBottom: 10}}>
+        {showCode ? <CodeDisplay
+          code={code}
+          language={language.toLowerCase()}
+          className="item"
+        /> : <div className="html-display">{ReactHtmlParser(preview)}</div>}
+      </Card>
+
+      {instructions && <SetupInstructions instructions={instructions} />}
+      {text && (
+        <Card>
+          <Paragraph>{text}</Paragraph>
+        </Card>
+      )}
+      {showBd && <BdAd />}
+    </div>
+  );
 };
 
 export default JobResult;

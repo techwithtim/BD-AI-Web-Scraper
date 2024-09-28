@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Button, message } from "antd";
+import { message } from "antd";
 import ScrapeForm from "./components/ScrapeForm";
 import LoginModal from "./components/LoginModal";
 import RegisterModal from "./components/RegisterModal";
@@ -64,7 +64,7 @@ const AppContent = () => {
             It's also <a href="">open-source</a>
           </p>
         </div>
-        <ScrapeForm showLogin={() => setLoginModalVisible(true)} />
+        <ScrapeForm showLogin={() => setLoginModalVisible(true)} fetchCredits={fetchUserCredits}/>
         {isLoggedIn && (
           <div style={{ marginTop: 20 }}>
             <UserJobs />

@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Table, Tag, Button, message } from "antd";
-import { DeleteOutlined, EyeOutlined } from "@ant-design/icons";
 import { getUserJobs, deleteJob } from "../services/api";
 import JobResultViewer from "./JobResultViewer";
 import { ScraperStatus } from "../enums/status";
+import "../css/UserJobs.css"
 
 const UserJobs = () => {
     const [jobs, setJobs] = useState([]);
@@ -83,30 +83,31 @@ const UserJobs = () => {
             title: "Action",
             key: "action",
             render: (_, record) => (
-                <>
+                <div className="actions">
                     <Button
                         type="primary"
-                        icon={<EyeOutlined />}
                         onClick={() => handleViewResult(record)}
                         style={{ marginRight: 8 }}
                         disabled={record.status !== ScraperStatus.COMPLETED}
+                        className="view-btn"
                     >
                         View Result
                     </Button>
                     <Button
                         type="danger"
-                        icon={<DeleteOutlined />}
                         onClick={() => handleDelete(record._id)}
+                        className="delete-btn"
                     >
                         Delete
                     </Button>
-                </>
+                </div>
             ),
         },
     ];
 
     return (
-        <>
+        <div className="user-jobs">
+            <h4>Previously Generated Scripts</h4>
             <Table
                 dataSource={jobs}
                 columns={columns}
@@ -118,7 +119,7 @@ const UserJobs = () => {
                 onClose={() => setResultViewerVisible(false)}
                 job={selectedJob}
             />
-        </>
+        </div>
     );
 };
 

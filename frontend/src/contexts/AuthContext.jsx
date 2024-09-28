@@ -6,14 +6,17 @@ const AuthContext = createContext();
 export const useAuth = () => useContext(AuthContext);
 
 export const AuthProvider = ({ children }) => {
+    const [loading, setLoading] = useState(true)
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [credits, setCredits] = useState(0);
 
     useEffect(() => {
+        setLoading(true)
         const token = localStorage.getItem('access_token');
         if (token) {
             setIsLoggedIn(true);
         }
+        setLoading(false)
     }, []);
 
     const login = async (email, password) => {

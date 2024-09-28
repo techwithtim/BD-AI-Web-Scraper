@@ -1,0 +1,28 @@
+.user-jobs {
+    padding: 20px;
+    font-family: var(--font-family);
+    font-weight: 400;
+}
+
+.actions {
+    display: flex;
+}
+
+.view-btn {
+    background-color: var(--primary-color);
+    padding-left: 10px;
+    padding-right: 10px;
+
+}
+
+.delete-btn {
+    background-color: white;
+    border: 1px black solid;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.delete-btn:hover {
+    background-color: rgb(235, 235, 235);
+    color: grey;
+}

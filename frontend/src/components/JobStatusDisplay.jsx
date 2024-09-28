@@ -43,7 +43,7 @@ const JobStatusDisplay = ({ status, startTime }) => {
     };
 
     return (
-        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '5px', marginBottom: 10 }}>
             <Tag color={statusColors[status]}>{status}</Tag>
             <Tooltip title="Elapsed Time">
                 <Tag icon={<ClockCircleOutlined />} color="default">

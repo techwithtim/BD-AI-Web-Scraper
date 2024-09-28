@@ -5,7 +5,7 @@ import "../css/Footer.css";
 const Footer = () => {
   return (
     <footer className="footer">
-      <div class="column">
+      <div className="column">
         <img src={logo} alt="Logo" className="footer-logo" />
         <div className="social-icons"></div>
       </div>
