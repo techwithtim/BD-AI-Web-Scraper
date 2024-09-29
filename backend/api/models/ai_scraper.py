@@ -7,6 +7,7 @@ class AIScrapeData(BaseModel):
     language: str
     library: str
     performance: int
+    with_bd: bool
 
     def dict(self, *args, **kwargs):
         d = super().dict(*args, **kwargs)
@@ -21,8 +22,8 @@ class AIScrapeData(BaseModel):
     # Validate language to be either "python" or "javascript"
     @validator("language")
     def validate_language(cls, value):
-        if value.lower() not in {"python", "javascript"}:
-            raise ValueError("Language must be either 'python' or 'javascript'")
+        if value.lower() not in {"python", "javascript", "c#"}:
+            raise ValueError("Language must be either 'python', 'javascript' or 'c#' ")
         return value
 
     # Validate library to be either "playwright", "puppeteer", or "selenium"

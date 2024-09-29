@@ -3,7 +3,7 @@ import json
 import anthropic
 from dotenv import load_dotenv
 from .chunking import estimate_tokens
-from .prompts import SYSTEM
+from .prompts import get_prompt
 
 load_dotenv()
 
@@ -11,9 +11,10 @@ CLAUDE_API_TOKEN = os.getenv("CLAUDE_API_TOKEN")
 client = anthropic.Client(api_key=CLAUDE_API_TOKEN)
 
 
-def send_dom_chunks_to_claude(dom_chunks, prompt, library, language, url):
+def send_dom_chunks_to_claude(dom_chunks, prompt, library, language, url, with_bd=False):
     final_messages = []
-    total_tokens = estimate_tokens(SYSTEM)
+    sys_prompt = get_prompt(language, library, with_bd)
+    total_tokens = estimate_tokens(sys_prompt)
 
     # Combine all DOM chunks into a single user message
     combined_dom = "Relevant DOM Sections:\n\n"
@@ -51,7 +52,7 @@ def send_dom_chunks_to_claude(dom_chunks, prompt, library, language, url):
             model="claude-3-opus-20240229",
             max_tokens=4096,
             messages=final_messages,
-            system=SYSTEM,
+            system=sys_prompt,
         )
         return response.content
     except anthropic.APIError as e:

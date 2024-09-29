@@ -17,7 +17,7 @@ load_dotenv()
 MODEL = os.getenv("MODEL", "openai")
 
 
-async def scrape_with_ai(job_id, url, prompt, language, library, performance):
+async def scrape_with_ai(job_id, url, prompt, language, library, performance, with_bd=False):
     job = {
         "result": {"tags": {}, "text": None, "html": None},
         "status": "In Progress",
@@ -33,11 +33,11 @@ async def scrape_with_ai(job_id, url, prompt, language, library, performance):
         dom_chunks = chunk_dom_sections(relevant_dom)
         if MODEL == "openai":
             result = send_dom_chunks_to_openai(
-                dom_chunks, prompt, library, language, url
+                dom_chunks, prompt, library, language, url, with_bd
             )
         else:
             result = send_dom_chunks_to_claude(
-                dom_chunks, prompt, library, language, url
+                dom_chunks, prompt, library, language, url, with_bd
             )
     except Exception as e:
         job["status"] = "Failed"

@@ -3,7 +3,7 @@ import json
 from openai import OpenAI
 from dotenv import load_dotenv
 from .chunking import estimate_tokens
-from .prompts import SYSTEM
+from .prompts import get_prompt
 
 load_dotenv()
 
@@ -11,9 +11,10 @@ OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 client = OpenAI()
 
 
-def send_dom_chunks_to_openai(dom_chunks, prompt, library, language, url):
-    final_messages = [{"role": "system", "content": SYSTEM}]
-    total_tokens = estimate_tokens(SYSTEM)
+def send_dom_chunks_to_openai(dom_chunks, prompt, library, language, url, with_bd=False):
+    sys_prompt = get_prompt(language, library, with_bd)
+    final_messages = [{"role": "system", "content": sys_prompt}]
+    total_tokens = estimate_tokens(sys_prompt)
 
     # Combine all DOM chunks into a single user message
     combined_dom = "Relevant DOM Sections:\n\n"

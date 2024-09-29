@@ -34,6 +34,7 @@ async def start_ai_scrape(
     language = data.language
     library = data.library
     performance = data.performance
+    with_bd = data.with_bd
 
     # Deduct one credit
     updated_user = await update_user_credits(user.email, - performance)
@@ -48,7 +49,7 @@ async def start_ai_scrape(
     )
     job_id = str(await create_job(job))
 
-    background_tasks.add_task(scrape_with_ai, job_id, url, prompt, language, library, performance)
+    background_tasks.add_task(scrape_with_ai, job_id, url, prompt, language, library, performance, with_bd)
 
     return {
         "job_id": job_id,

@@ -87,6 +87,7 @@ const ScrapeForm = ({ showLogin, fetchCredits, fetchJobs }) => {
           >
             <Option value="python">Python</Option>
             <Option value="javascript">JavaScript</Option>
+            <Option value="c#">C#</Option>
           </Select>
         </Form.Item>
 

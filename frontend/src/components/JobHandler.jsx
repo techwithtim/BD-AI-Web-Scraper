@@ -7,7 +7,7 @@ import JobStatusDisplay from "./JobStatusDisplay";
 import { useAuth } from "../contexts/AuthContext";
 import "../css/JobHandler.css";
 
-const JobHandler = ({ scrapeData, login, stopLoading }) => {
+const JobHandler = ({ scrapeData, stopLoading }) => {
   const [jobId, setJobId] = useState(null);
   const [jobStatus, setJobStatus] = useState(null);
   const [jobResult, setJobResult] = useState(null);
@@ -60,7 +60,7 @@ const JobHandler = ({ scrapeData, login, stopLoading }) => {
     }
 
     try {
-      const response = await startAiScrape(scrapeData);
+      const response = await startAiScrape({...scrapeData, with_bd: withBd});
       setJobId(response.job_id);
       setJobStatus(ScraperStatus.STARTED);
       setStartTime(new Date());
@@ -69,6 +69,7 @@ const JobHandler = ({ scrapeData, login, stopLoading }) => {
     } catch (error) {
       console.error("Error starting scrape job:", error);
       message.error("Failed to start scrape job");
+      stopLoading(ScraperStatus.FAILED)
     }
   };
 
