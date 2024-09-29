@@ -11,10 +11,10 @@ const LoginModal = ({ visible, onCancel, onSwitchToRegister }) => {
     form.resetFields()
     try {
       await login(values.username, values.password);
-      message.success("Login successful");
+      message.success("Login successful.");
       onCancel();
     } catch (error) {
-      message.error("Login failed. Please check your credentials.");
+      message.error(`Login failed. Please check your credentials and/or verify your email.`);
     }
   };
 

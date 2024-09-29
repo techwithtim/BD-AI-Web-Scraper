@@ -10,6 +10,7 @@ import Navbar from "./components/NavBar";
 import Footer from "./components/Footer"
 import "@fontsource/inter";
 import "./App.css";
+import Verification from "./components/CheckForVerification";
 
 
 const AppContent = () => {
@@ -91,6 +92,7 @@ const AppContent = () => {
           onCancel={() => setRegisterModalVisible(false)}
           onSwitchToLogin={switchToLogin}
         />
+        <Verification />
       </div>
       <Footer />
     </div>

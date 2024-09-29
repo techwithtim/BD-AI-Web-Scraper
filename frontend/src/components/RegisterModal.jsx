@@ -9,10 +9,10 @@ const RegisterModal = ({ visible, onCancel, onSwitchToLogin }) => {
     form.resetFields()
     try {
       await register(values.email, values.password);
-      message.success("Registration successful. Please log in.");
+      message.success("Registration successful. Please verify your email before signing in.");
       onSwitchToLogin();
     } catch (error) {
-      message.error("Registration failed. Please try again.");
+      message.error(`Registration failed. ${error?.response?.data?.detail?.toString()}`);
     }
   };
 

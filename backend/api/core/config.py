@@ -17,6 +17,13 @@ class Settings(BaseSettings):
     REFRESH_TOKEN_EXPIRE_DAYS: int = int(os.getenv("REFRESH_TOKEN_EXPIRE_DAYS", "7"))
     ENVIRONMENT: str = os.getenv("ENVIRONMENT", "development")
     MODEL: str = os.getenv("MODEL", "openai")
+    MAIL_USERNAME: str = os.getenv("MAIL_USERNAME", "")
+    MAIL_PASSWORD: str = os.getenv("MAIL_PASSWORD", "")
+    MAIL_FROM: str = os.getenv("MAIL_FROM", "")
+    MAIL_PORT: int = os.getenv("MAIL_PORT", 587)
+    MAIL_SERVER: str = os.getenv("MAIL_SERVER", "")
+    MAIL_FROM_NAME: str = os.getenv("MAIL_FROM_NAME", "")
+    FRONTEND_URL: str = os.getenv("FRONTEND_URL")
 
     class Config:
         env_file = ".env"

@@ -18,7 +18,6 @@ const UserJobs = () => {
         setLoading(true)
         try {
             await deleteJob(jobId);
-            console.log(jobId)
             message.success("Job deleted successfully");
             setJobs((jobs) => jobs.filter((job) => job._id !== jobId))
         } catch (error) {

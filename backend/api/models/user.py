@@ -16,7 +16,7 @@ class UserOut(UserBase):
     id: Annotated[str, Field(default_factory=lambda: str(ObjectId()), alias="_id")]
     credits: int
     last_credit_reset: datetime
-    is_verified: bool
+    is_active: bool
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -27,8 +27,12 @@ class UserOut(UserBase):
 
 class UserInDB(UserOut):
     hashed_password: str
+    verification_token: str
 
 
 class Token(BaseModel):
     access_token: str
     token_type: str
+
+class VerificationRequest(BaseModel):
+    token: str

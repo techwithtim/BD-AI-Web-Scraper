@@ -40,7 +40,8 @@ export const AuthProvider = ({ children }) => {
         setCredits,
         setJobs,
         jobs,
-        loading
+        loading,
+        setIsLoggedIn
     };
 
     return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

@@ -9,22 +9,26 @@ from api.core.config import settings
 from bson import ObjectId
 
 
+STARTING_CREDITS = 10
+
 async def get_user(email: str):
     user = await database.users.find_one({"email": email})
     if user:
         return UserInDB(**user)
 
 
-async def create_user(user: UserIn):
+async def create_user(user: UserIn, verification_token):
     hashed_password = get_password_hash(user.password)
     db_user = UserInDB(
         id=str(ObjectId()),
         email=user.email,
         hashed_password=hashed_password,
-        credits=10,
+        credits=STARTING_CREDITS,
         last_credit_reset=datetime.now(),
-        is_verified=False,
+        is_active=False,
+        verification_token=verification_token,
     )
+    
     await database.users.insert_one(db_user.dict(by_alias=True))
     return db_user
 
@@ -37,6 +41,17 @@ async def update_user_credits(email: str, credit_change: int):
         )  # Ensure credits don't go below 0
         result = await database.users.update_one(
             {"email": email}, {"$set": {"credits": new_credits}}
+        )
+        if result.modified_count == 1:
+            updated_user = await database.users.find_one({"email": email})
+            return UserOut(**updated_user)
+    return None
+
+async def verify_user(email: str, is_active=True):
+    user = await get_user(email)
+    if user:
+        result = await database.users.update_one(
+            {"email": email}, {"$set": {"is_active": is_active}}
         )
         if result.modified_count == 1:
             updated_user = await database.users.find_one({"email": email})
@@ -63,3 +78,11 @@ async def get_current_user(token: str = Depends(oauth2_scheme)):
     if user is None:
         raise credentials_exception
     return user
+
+async def get_user_by_verification_token(token: str):
+    user = await database.users.find_one({
+        "verification_token": token,
+    })
+    if user:
+        return UserInDB(**user)
+    return None
