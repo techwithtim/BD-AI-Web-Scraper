@@ -25,7 +25,7 @@ const LoginModal = ({ visible, onCancel, onSwitchToRegister }) => {
       footer={null}
       className="modal"
     >
-      <Form onFinish={handleLogin} className="form">
+      <Form onFinish={handleLogin} className="form" form={form}>
         <h1>Login</h1>
         <Form.Item
           name="username"

@@ -12,7 +12,7 @@ const JobHandler = ({ scrapeData, login, stopLoading }) => {
   const [jobStatus, setJobStatus] = useState(null);
   const [jobResult, setJobResult] = useState(null);
   const [startTime, setStartTime] = useState(null);
-  const { credits, isLoggedIn, setJobs } = useAuth();
+  const { credits } = useAuth();
 
   useEffect(() => {
     let intervalId;
@@ -30,10 +30,9 @@ const JobHandler = ({ scrapeData, login, stopLoading }) => {
 
   useEffect(() => {
     if (scrapeData.bdMode !== null && scrapeData.bdMode !== undefined) {
-      handleStartJob(scrapeData.bdMode)
-    } 
-
-  }, [scrapeData.bdMode])
+      handleStartJob(scrapeData.bdMode);
+    }
+  }, [scrapeData.bdMode]);
 
   const checkJobStatus = async () => {
     try {
@@ -50,15 +49,13 @@ const JobHandler = ({ scrapeData, login, stopLoading }) => {
       console.error("Error checking job status:", error);
       message.error("Failed to check job status");
       setJobStatus(ScraperStatus.FAILED);
+      stopLoading(ScraperStatus.FAILED);
     }
   };
 
   const handleStartJob = async (withBd = false) => {
-    if (!isLoggedIn) {
-      return login();
-    }
-
     if (credits === 0) {
+      stopLoading(ScraperStatus.FAILED);
       return message.error("Insufficient credits.");
     }
 
@@ -67,11 +64,12 @@ const JobHandler = ({ scrapeData, login, stopLoading }) => {
       setJobId(response.job_id);
       setJobStatus(ScraperStatus.STARTED);
       setStartTime(new Date());
+      setJobResult(null);
       message.success("Scrape job started successfully");
     } catch (error) {
       console.error("Error starting scrape job:", error);
       message.error("Failed to start scrape job");
-    } 
+    }
   };
 
   return (

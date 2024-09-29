@@ -30,6 +30,7 @@ const ScrapeForm = ({ showLogin, fetchCredits, fetchJobs }) => {
 
   const handleSubmit = (values) => {
     if (loading) return;
+    if (!isLoggedIn) return showLogin()
     setLoading(true);
     setScrapeData({
       ...values,
@@ -39,7 +40,6 @@ const ScrapeForm = ({ showLogin, fetchCredits, fetchJobs }) => {
 
   const stopLoading = (status) => {
     if (!loading) return;
-    if (status === ScraperStatus.COMPLETED) message.success("Job completed.");
     setScrapeData({ ...scrapeData, bdMode: null });
     setLoading(false);
     fetchCredits();
