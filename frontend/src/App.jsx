@@ -73,7 +73,7 @@ const AppContent = () => {
           <h1>Script Generator</h1>
           <p>Power your AI apps with clean data crawled from any website.</p>
           <p>
-            It's also <a href="">open-source</a>
+            It's also <a href="https://github.com/techwithtim/BD-AI-Web-Scraper">open-source</a>
           </p>
         </div>
         <ScrapeForm showLogin={() => setLoginModalVisible(true)} fetchCredits={fetchUserCredits} fetchJobs={fetchJobs}/>

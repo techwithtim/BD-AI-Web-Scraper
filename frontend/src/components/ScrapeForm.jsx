@@ -1,11 +1,10 @@
 import React, { useState } from "react";
-import { Form, Input, Select, Slider, Button, message } from "antd";
+import { Form, Input, Select, Slider, Button, Tooltip } from "antd";
 import { useAuth } from "../contexts/AuthContext";
 import JobHandler from "./JobHandler";
 import LoadingIndicator from "./LoadingIndicator";
 import "../css/ScrapeForm.css";
 import bdLogo from "../assets/bd-logo.png";
-import { ScraperStatus } from "../enums/status";
 
 const { Option } = Select;
 const { TextArea } = Input;
@@ -30,7 +29,7 @@ const ScrapeForm = ({ showLogin, fetchCredits, fetchJobs }) => {
 
   const handleSubmit = (values) => {
     if (loading) return;
-    if (!isLoggedIn) return showLogin()
+    if (!isLoggedIn) return showLogin();
     setLoading(true);
     setScrapeData({
       ...values,
@@ -131,7 +130,14 @@ const ScrapeForm = ({ showLogin, fetchCredits, fetchJobs }) => {
         />
       </Form.Item>
 
-      <Form.Item label="Performance" name="performance">
+      <Form.Item
+        label={
+          <Tooltip title="This is the number of credits you will use. More credits = better performance.">
+            Performance
+          </Tooltip>
+        }
+        name="performance"
+      >
         <Slider
           min={1}
           max={4}

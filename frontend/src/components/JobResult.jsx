@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Typography, Card, Button } from "antd";
-import ReactHtmlParser from "react-html-parser";
+import parse from 'html-react-parser';
 import CodeDisplay from "./CodeDisplay";
 import SetupInstructions from "./SetupInstructions";
 import BdAd from "./BdAd";
@@ -60,7 +60,7 @@ const JobResult = ({ result, language, showBd=true }) => {
           code={code}
           language={language.toLowerCase()}
           className="item"
-        /> : <div className="html-display">{ReactHtmlParser(preview)}</div>}
+        /> : <div className="html-display">{parse(preview)}</div>}
       </Card>
 
       {instructions && <SetupInstructions instructions={instructions} />}
