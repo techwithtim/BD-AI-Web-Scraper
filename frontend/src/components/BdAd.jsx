@@ -1,4 +1,4 @@
-import "../css/bdAd.css"
+import "../css/BdAd.css"
 import React from 'react';
 import bdLogo from "../assets/bd-logo.png"
 
