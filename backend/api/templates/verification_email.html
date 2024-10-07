@@ -1,8 +1,14 @@
 <!DOCTYPE html>
 <html>
-<body>
-    <h1>Verify your email</h1>
-    <p>Click the link below to verify your email address:</p>
-    <a href="{{ verification_url }}">Verify Email</a>
+<body style="font-family: Arial, sans-serif; background-color: #f4f4f4; padding: 20px; text-align: center; color: #333;">
+    <div style="max-width: 600px; margin: 0 auto; background-color: #ffffff; border-radius: 8px; padding: 20px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+        <h1 style="color: #333;">Verify Your Email</h1>
+        <p style="font-size: 16px; line-height: 1.5;">Click the button below to verify your email address:</p>
+        <a href="{{ verification_url }}" 
+           style="display: inline-block; padding: 12px 24px; margin-top: 20px; font-size: 16px; color: #ffffff; background-color: #007bff; border-radius: 4px; text-decoration: none;">
+           Verify Email
+        </a>
+        <p style="margin-top: 30px; font-size: 14px; color: #666;">If you didn't request this email, please ignore it.</p>
+    </div>
 </body>
 </html>
