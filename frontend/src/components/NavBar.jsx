@@ -1,5 +1,5 @@
 import React from "react";
-import "../css/Navbar.css";
+import "../css/NavBar.css";
 import logo from "../assets/logo.png";
 
 const Navbar = ({ credits, isLoggedIn, login, logout }) => {
