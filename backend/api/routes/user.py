@@ -37,7 +37,7 @@ async def send_verification_email(email: str, verification_token: str):
     # Render email template
     template = env.get_template('verification_email.html')
     html = template.render(
-        verification_url=f"{settings.FRONTEND_URL}/verify-email?token={verification_token}"
+        verification_url=f"{settings.FRONTEND_URL}/?token={verification_token}"
     )
     
     # Create message
