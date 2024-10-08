@@ -125,7 +125,7 @@ if __name__ == '__main__':
 PYTHON_PLAYWRIGHT = """import asyncio
 from playwright.async_api import async_playwright
 
-SBR_WS_CDP = 'wss://brd-customer-hl_8a10678a-zone-scraping_browser3:tc2g8cce59c7@brd.superproxy.io:9222'
+SBR_WS_CDP = '<enter yours>'
 
 
 async def run(pw):
@@ -161,7 +161,7 @@ if __name__ == '__main__':
 CSHARP_SELENIUM = """using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Remote;
 
-var SBR_WEBDRIVER = "https://brd-customer-hl_8a10678a-zone-scraping_browser3:tc2g8cce59c7@brd.superproxy.io:9515";
+var SBR_WEBDRIVER = "<enter yours>";
 
 Console.WriteLine("Connecting to Scraping Browser...");
 var options = new ChromeOptions();
@@ -184,7 +184,7 @@ Console.WriteLine(html);"""
 
 CSHARP_PLAYWRIGHT = """using Microsoft.Playwright;
 
-var SBR_CDP = "wss://brd-customer-hl_8a10678a-zone-scraping_browser3:tc2g8cce59c7@brd.superproxy.io:9222";
+var SBR_CDP = "<enter yours>";
 
 Console.WriteLine("Connecting to Scraping Browser...");
 using var pw = await Playwright.CreateAsync();
@@ -211,7 +211,7 @@ CSHARP_PUPPETEER = """using PuppeteerSharp;
 using System.Net.WebSockets;
 using System.Text;
 
-var SBR_WS_ENDPOINT = "wss://brd-customer-hl_8a10678a-zone-scraping_browser3:tc2g8cce59c7@brd.superproxy.io:9222";
+var SBR_WS_ENDPOINT = "<enter yours>";
 
 var Connect = (string ws) => Puppeteer.ConnectAsync(new ()
 {
